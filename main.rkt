@@ -79,4 +79,16 @@
     [_ (raise-syntax-error 'define-syntax "only syntax-rules macros exist in dan-scheme")]))
 
 (module reader syntax/module-reader
-  dan-scheme)
+  dan-scheme
+  #:wrapper1 (lambda (r)
+               (parameterize ([read-case-sensitive #t]
+                              [read-accept-box #f]
+                              [read-accept-compiled #f]
+                              [read-accept-bar-quote #t]
+                              [read-accept-graph #f]
+                              [read-accept-dot #t]
+                              [read-accept-infix-dot #f]
+                              [read-cdot #f]
+                              [read-accept-quasiquote #t]
+                              [read-accept-reader #f])
+                 (r))))
