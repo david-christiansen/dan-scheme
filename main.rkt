@@ -7,6 +7,9 @@
          equal? eqv?
          + - add1 sub1 * /
          = > < >= <=
+         memv assv
+         map list-ref
+         apply
          and or not
          cond if
          let
