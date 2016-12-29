@@ -1,6 +1,6 @@
-#lang racket
+#lang racket/base
 
-(require (for-syntax syntax/parse))
+(require (for-syntax racket/base syntax/parse))
 
 (provide cons car cdr pair? null?
          quote quasiquote unquote
@@ -13,9 +13,9 @@
          and or not
          cond if
          let
-         syntax-rules
+         syntax-rules (for-syntax ...)
          require
-         provide
+         provide all-defined-out for-syntax
          #%module-begin
          #%datum
          #%top-interaction
