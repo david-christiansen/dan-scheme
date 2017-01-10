@@ -5,7 +5,7 @@
 (provide cons car cdr pair? null?
          quote quasiquote unquote
          equal? eqv?
-         + - add1 sub1 * /
+         + - add1 sub1 * / number?
          = > < >= <=
          memv assv
          map list-ref
