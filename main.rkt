@@ -11,7 +11,7 @@
          map list-ref
          apply
          and or not
-         cond if
+         cond if else
          let
          syntax-rules (for-syntax ...)
          require
