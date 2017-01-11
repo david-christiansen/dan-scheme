@@ -15,7 +15,7 @@
          symbol?
          let
          syntax-rules (for-syntax ...)
-         require
+         require only-in prefix-in
          provide all-defined-out for-syntax
          #%module-begin
          #%datum
