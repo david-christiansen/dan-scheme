@@ -7,7 +7,7 @@
 
 @defmodule[dan-scheme]
 
-This is a very simple Scheme-like language for situations in which
+This is a little Scheme-like language for situations in which
 simplicity is preferred over convenience.
 
 @local-table-of-contents[]
