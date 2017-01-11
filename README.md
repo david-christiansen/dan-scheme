@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/david-christiansen/dan-scheme.svg?branch=master)](https://travis-ci.org/david-christiansen/dan-scheme)
+[![Coverage Status](https://coveralls.io/repos/github/david-christiansen/dan-scheme/badge.svg?branch=master)](https://coveralls.io/github/david-christiansen/dan-scheme?branch=master)
+
 A Little Scheme
 ===================
 
