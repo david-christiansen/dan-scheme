@@ -4,4 +4,4 @@
 (define deps '("base"))
 (define build-deps '("scribble-lib" "racket-doc"))
 (define scribblings '(("scribblings/dan-scheme.scrbl" ())))
-(define pkg-desc "A very little language")
+(define pkg-desc "A very little language for situations where simplicity is desired over convenience")
