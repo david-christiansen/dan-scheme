@@ -31,7 +31,7 @@
   (cond
     ((null? lst) '())
     (else (cons (proc (car lst))
-                (map proc (cdr lst))))))
+                (dan-map proc (cdr lst))))))
 
 (define-for-syntax (sum nums)
   (cond
