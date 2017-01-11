@@ -2,16 +2,17 @@
 
 (require (for-syntax racket/base syntax/parse))
 
-(provide cons car cdr pair? null?
+(provide cons car cdr pair?
          quote quasiquote unquote
          equal? eqv?
          + - add1 sub1 * / number?
          = > < >= <=
          memv assv
-         map list-ref
+         list-ref list? null?
          apply
-         and or not
+         and or not boolean?
          cond if else
+         symbol?
          let
          syntax-rules (for-syntax ...)
          require
@@ -20,9 +21,17 @@
          #%datum
          #%top-interaction
          (rename-out [dan-lambda lambda]
+                     [dan-lambda λ]
+                     [dan-map map]
                      [dan-define define]
                      [dan-define-syntax define-syntax]
                      [#%plain-app #%app]))
+
+(define (dan-map proc lst)
+  (cond
+    ((null? lst) '())
+    (else (cons (proc (car lst))
+                (map proc (cdr lst))))))
 
 (define-for-syntax (sum nums)
   (cond
