@@ -8,3 +8,5 @@
 (define foo
   (lambda args (cons 1 args)))
 
+(check-equal? (map (λ (x) (add1 x)) '(1 2 3 4))
+              '(2 3 4 5))
