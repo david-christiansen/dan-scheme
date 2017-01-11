@@ -10,6 +10,8 @@ Use it in contexts where simplicity is desired above convenience.
 
 Installation
 ------------
+`#lang dan-scheme` requires Racket version 6.4 or higher.
+
 Check out the package, then run
 ```
 raco pkg install
