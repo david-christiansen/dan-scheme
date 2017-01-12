@@ -17,7 +17,7 @@ simplicity is preferred over convenience.
 Creates a pair whose @racket[car] is @racket[a] and whose @racket[cdr] is @racket[d].
 }
 
-@defproc[(car (p pair?)) boolean?]{
+@defproc[(car (p pair?)) any/c]{
 Finds the first element of @racket[p].
 }
 
