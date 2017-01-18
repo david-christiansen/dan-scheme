@@ -25,7 +25,7 @@ Finds the first element of @racket[p].
 Finds the second element of @racket[p].
 }
 
-@defproc[(pair? (p any/c)) any/c]{
+@defproc[(pair? (p any/c)) boolean?]{
 Returns @racket[#t] if @racket[p] is a pair of the sort built with @racket[cons], or @racket[#f] otherwise.
 }
 
