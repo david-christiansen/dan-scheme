@@ -1,5 +1,7 @@
 #lang dan-scheme
 (require (prefix-in r: racket)
+         (only-in syntax/location quote-srcloc)
+         (only-in setup/path-to-relative path->relative-string/library)
          (for-syntax
           (only-in racket
                    quasisyntax unsyntax
@@ -52,3 +54,33 @@
               (define-syntax (thing stx)
                 (r:syntax-case stx ()
                   ((_ x) #'x))))))
+
+;; -----------------------------------------------------------------------------
+
+;; (check-exn/loc expr)
+;; Tests that evaluating `expr` raises an exception
+;;  and that the exception references a function defined on the same line
+;;  as the `(check-exn/loc expr)` expression appears in this file.
+(r:define-syntax (check-exn/loc stx)
+  (r:syntax-case stx ()
+    [(_ expr)
+     (r:quasisyntax/loc stx
+       (check-exn
+        (r:lambda (e)
+          (r:and (r:exn:fail? e)
+            (r:let* ([ctx (r:continuation-mark-set->context (r:exn-continuation-marks e))]
+                     [srcloc (r:cdar ctx)]
+                     [expected-srcloc  (quote-srcloc expr)])
+              (r:and
+               (r:string=? (path->relative-string/library (r:srcloc-source srcloc))
+                           (path->relative-string/library (r:srcloc-source expected-srcloc)))
+               (r:printf "lines ~a ans ~a~n" (r:srcloc-line srcloc)
+                    (r:srcloc-line expected-srcloc))))))
+        #,(r:quasisyntax/loc stx (lambda () #,(r:syntax/loc stx expr)))
+        "make sure the argument to `check-exn/loc` does not span multiple lines"))]))
+
+(check-exn/loc (map (lambda (x) (+ x x)) '(1 two 3)))
+
+(check-exn/loc (r:begin (define (f x) (car x)) (f 3)))
+
+(check-exn/loc (r:begin (define f (lambda (x) (add1 x))) (f 'hello)))

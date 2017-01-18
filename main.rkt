@@ -67,25 +67,28 @@
 (define-syntax (dan-lambda stx)
   (syntax-parse stx
     [(_ (x:id ...) body)
-     #'(#%plain-lambda (x ...) body)]
+     (syntax/loc stx (#%plain-lambda (x ...) body))]
     [(_ args:id body)
-     (ensure-helper #'args #'body #'(#%plain-lambda args body))]))
+     (ensure-helper (syntax/loc stx args) (syntax/loc stx body) (syntax/loc stx (#%plain-lambda args body)))]))
 
 (define-syntax (dan-define stx)
   (syntax-parse stx
     [(_ x:id e:expr)
-     #'(define x e)]
+     (syntax/loc stx (define x e))]
     [(_ (f:id x:id ...) e:expr)
-     #'(define f (dan-lambda (x ...) e))]
-    [(_ (f:id x:id ... . args) e:expr)
-     (raise-syntax-error 'define "define doesn't get to use the (f x . args) form, use lambda")]))
+     (quasisyntax/loc stx
+       (define f
+         #,(syntax/loc stx
+             (dan-lambda (x ...) e))))]
+    [(_ (f:id x:id ... . args:id) e:expr)
+     (raise-syntax-error 'define "define doesn't get to use the (f x . args) form, use lambda" stx)]))
 
 (define-syntax (dan-define-syntax stx)
   (syntax-parse stx
     #:literals (syntax-rules)
     [(_ x:id (syntax-rules (lit ...) pat ...))
-     #'(define-syntax x (syntax-rules (lit ...) pat ...))]
-    [_ (raise-syntax-error 'define-syntax "only syntax-rules macros exist in dan-scheme")]))
+     (syntax/loc stx (define-syntax x (syntax-rules (lit ...) pat ...)))]
+    [_ (raise-syntax-error 'define-syntax "only syntax-rules macros exist in dan-scheme" stx)]))
 
 (module reader syntax/module-reader
   dan-scheme
