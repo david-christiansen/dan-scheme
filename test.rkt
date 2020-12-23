@@ -72,15 +72,11 @@
                      [srcloc (r:cdar ctx)]
                      [expected-srcloc  (quote-srcloc expr)])
               (r:and
-               (r:string=? (path->relative-string/library (r:srcloc-source srcloc))
-                           (path->relative-string/library (r:srcloc-source expected-srcloc)))
                (r:printf "lines ~a ans ~a~n" (r:srcloc-line srcloc)
-                    (r:srcloc-line expected-srcloc))))))
+                         (r:srcloc-line expected-srcloc))
+               (r:string=? (path->relative-string/library (r:srcloc-source srcloc))
+                           (path->relative-string/library (r:srcloc-source expected-srcloc)))))))
         #,(r:quasisyntax/loc stx (lambda () #,(r:syntax/loc stx expr)))
         "make sure the argument to `check-exn/loc` does not span multiple lines"))]))
 
-(check-exn/loc (map (lambda (x) (+ x x)) '(1 two 3)))
-
-(check-exn/loc (r:begin (define (f x) (car x)) (f 3)))
-
-(check-exn/loc (r:begin (define f (lambda (x) (add1 x))) (f 'hello)))
+(check-exn/loc (map (if (= 0 (r:random 1)) (lambda (x) (if (= 8 (+ x x)) 'eight 'other)) 'oops) '(1 two 3)))
